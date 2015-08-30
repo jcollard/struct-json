@@ -1,11 +1,24 @@
 #lang racket
 
+(provide struct-json)
+
 (require (for-syntax racket/syntax))
 
+; Helper function... this has to be defined somewhere already...
 (define (zip lst1 lst2)
   (cond [(or (empty? lst1) (empty? lst2)) '()]
         [else (cons (cons (car lst1) (car lst2))
                     (zip (cdr lst1) (cdr lst2)))]))
+
+; Works just like struct
+; > (require json)
+; > (struct-json pt (x y) #:transparent)
+; > (jsexpr->string (pt->json (pt 5 6)))
+; "{\"y\":6,\"x\":5}"
+; > (pt? (json->pt (string->jsexpr "{\"y\":6,\"x\":5}")))
+; #t
+; > (json->pt (string->jsexpr "{\"y\":6,\"x\":5}"))
+; (pt 5 6)
 
 (define-syntax (struct-json stx)
     (syntax-case stx ()
