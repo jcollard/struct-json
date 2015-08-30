@@ -10,7 +10,9 @@
         [else (cons (cons (car lst1) (car lst2))
                     (zip (cdr lst1) (cdr lst2)))]))
 
-; Works just like struct
+; Works just like struct but provides an two additional functions
+; id->json and json->id. Note: This only works for simple values
+; TODO: add syntax for (struct-json id ((x to-json-fun) (y to-json-fun)))
 ; > (require json)
 ; > (struct-json pt (x y) #:transparent)
 ; > (jsexpr->string (pt->json (pt 5 6)))
